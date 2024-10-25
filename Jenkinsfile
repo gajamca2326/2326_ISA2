@@ -1,31 +1,27 @@
 pipeline {
-    agent any
+    agent any  
     stages {
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/<gajamca2326>/2326_ISA2.git'
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t roll_no_image .'
+                    bat "docker build -t gajamca2326/2326_isa2 ."
                 }
             }
         }
-        stage('Cleanup Old Container') {
+        stage('Delete Existing Container') {
             steps {
                 script {
-                    sh 'docker rm -f roll_no || true'
+                    bat "docker rm -f 2326 || exit 0"
                 }
             }
         }
-        stage('Run Docker Container') {
+        stage('Create and Run Docker Container') {
             steps {
                 script {
-                    sh 'docker run -d --name roll_no roll_no_image'
+                    bat "docker run -d --name 2326  gajamca2326/2326_isa2"
                 }
             }
         }
     }
 }
+
